@@ -1,4 +1,3 @@
-import type { TEntitlement } from '@n8n_io/license-sdk';
 import axios, { AxiosError } from 'axios';
 import { mock } from 'jest-mock-extended';
 
@@ -13,7 +12,7 @@ jest.mock('axios');
 describe('LicenseService', () => {
 	const license = mock<License>();
 	const workflowRepository = mock<WorkflowRepository>();
-	const entitlement = mock<TEntitlement>({ productId: '123' });
+	const entitlement = mock<any>({ productId: '123' });
 	const eventService = mock<EventService>();
 	const licenseService = new LicenseService(
 		mock(),
