@@ -24,8 +24,14 @@ RUN NODE_ENV=production DOCKER_BUILD=true pnpm --filter=n8n --prod --no-optional
 FROM n8nio/base:${NODE_VERSION}
 ENV NODE_ENV=production
 
+ARG PUID=114
+ARG PGID=1001
 ARG N8N_RELEASE_TYPE=dev
 ENV N8N_RELEASE_TYPE=${N8N_RELEASE_TYPE}
+
+RUN deluser --remove-home node \
+  && addgroup -S node -g "${PGID}" \
+  && adduser -S -G node -u "${PUID}" node
 
 WORKDIR /home/node
 COPY --from=builder /compiled /usr/local/lib/node_modules/n8n
